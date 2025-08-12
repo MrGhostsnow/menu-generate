@@ -10,7 +10,7 @@ import { useForm, Controller } from "react-hook-form";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../types/navigation";
 import { useNavigation } from "@react-navigation/native";
-import { tailwind } from "react-native-tailwindcss";
+import { t } from "react-native-tailwindcss";
 
 type FormScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -22,47 +22,20 @@ export default function FormScreen() {
   const { control, handleSubmit } = useForm();
 
   const onSubmit = (data: any) => {
-    navigation.navigate("ResultScreen", { preferences: data });
+    navigation.navigate("ResultScreen", {
+      action: "generateMenu",
+      preferences: data,
+    });
   };
 
   return (
     <ScrollView
-      style={[tailwind.flex1, tailwind.bgGray100, tailwind.pX4, tailwind.pY3]}
+      style={[t.flex1, t.bgGray100, t.pX4, t.pY3]}
       contentContainerStyle={{ paddingBottom: 20 }}
     >
-      {/* Header */}
-      {/* <View
-        style={[
-          tailwind.flexRow,
-          tailwind.itemsCenter,
-          tailwind.justifyBetween,
-          tailwind.pB2,
-        ]}
-      >
-        <Text
-          style={[
-            tailwind.textLg,
-            tailwind.fontBold,
-            { color: "#101019" },
-            tailwind.textCenter,
-            tailwind.flex1,
-            { paddingRight: 48 }, // pr-12 is 3rem = 48px
-          ]}
-        >
-          Novo Cardápio
-        </Text>
-      </View> */}
-
       {/* Nome */}
-      <View style={tailwind.mB4}>
-        <Text
-          style={[
-            tailwind.textBase,
-            tailwind.fontMedium,
-            { color: "#101019" },
-            tailwind.pB2,
-          ]}
-        >
+      <View style={t.mB4}>
+        <Text style={[t.textBase, t.fontMedium, { color: "#101019" }, t.pB2]}>
           Nome
         </Text>
         <Controller
@@ -75,10 +48,10 @@ export default function FormScreen() {
               onChangeText={onChange}
               placeholderTextColor="#57578e"
               style={[
-                tailwind.h14,
-                { backgroundColor: "#e9e9f1", borderRadius: 20 },
-                tailwind.pX4,
-                tailwind.textBase,
+                t.h16,
+                { backgroundColor: "#e9e9f1", borderRadius: 8 },
+                t.pX4,
+                t.textBase,
                 { color: "#101019" },
               ]}
             />
@@ -87,15 +60,8 @@ export default function FormScreen() {
       </View>
 
       {/* Gostos */}
-      <View style={tailwind.mB4}>
-        <Text
-          style={[
-            tailwind.textBase,
-            tailwind.fontMedium,
-            { color: "#101019" },
-            tailwind.pB2,
-          ]}
-        >
+      <View style={t.mB4}>
+        <Text style={[t.textBase, t.fontMedium, { color: "#101019" }, t.pB2]}>
           Gostos Alimentares
         </Text>
         <Controller
@@ -108,10 +74,10 @@ export default function FormScreen() {
               onChangeText={onChange}
               placeholderTextColor="#57578e"
               style={[
-                tailwind.h14,
-                { backgroundColor: "#e9e9f1", borderRadius: 20 },
-                tailwind.pX4,
-                tailwind.textBase,
+                t.h16,
+                { backgroundColor: "#e9e9f1", borderRadius: 8 },
+                t.pX4,
+                t.textBase,
                 { color: "#101019" },
               ]}
             />
@@ -121,7 +87,7 @@ export default function FormScreen() {
 
       {/* Chips simulados */}
       {/* <View
-        style={[tailwind.flexRow, tailwind.flexWrap, tailwind.mB4, { gap: 8 }]}
+        style={[t.flexRow, t.flexWrap, t.mB4, { gap: 8 }]}
       >
         {[
           "Italiana",
@@ -135,7 +101,7 @@ export default function FormScreen() {
             style={[
               {
                 backgroundColor: "#e9e9f1",
-                borderRadius: 20,
+                borderRadius: 8,
                 paddingHorizontal: 16,
                 paddingVertical: 4,
                 marginRight: 8,
@@ -145,8 +111,8 @@ export default function FormScreen() {
           >
             <Text
               style={[
-                tailwind.textSm,
-                tailwind.fontMedium,
+                t.textSm,
+                t.fontMedium,
                 { color: "#101019" },
               ]}
             >
@@ -157,15 +123,8 @@ export default function FormScreen() {
       </View> */}
 
       {/* Restrições */}
-      <View style={tailwind.mB4}>
-        <Text
-          style={[
-            tailwind.textBase,
-            tailwind.fontMedium,
-            { color: "#101019" },
-            tailwind.pB2,
-          ]}
-        >
+      <View style={t.mB4}>
+        <Text style={[t.textBase, t.fontMedium, { color: "#101019" }, t.pB2]}>
           Restrições Alimentares
         </Text>
         <Controller
@@ -178,10 +137,10 @@ export default function FormScreen() {
               onChangeText={onChange}
               placeholderTextColor="#57578e"
               style={[
-                tailwind.h14,
-                { backgroundColor: "#e9e9f1", borderRadius: 20 },
-                tailwind.pX4,
-                tailwind.textBase,
+                t.h16,
+                { backgroundColor: "#e9e9f1", borderRadius: 8 },
+                t.pX4,
+                t.textBase,
                 { color: "#101019" },
               ]}
             />
@@ -189,52 +148,9 @@ export default function FormScreen() {
         />
       </View>
 
-      {/* <View
-        style={[tailwind.flexRow, tailwind.flexWrap, tailwind.mB4, { gap: 8 }]}
-      >
-        {[
-          "Sem Glúten",
-          "Sem Lactose",
-          "Vegano",
-          "Sem Nozes",
-          "Sem Frutos do Mar",
-        ].map((item) => (
-          <View
-            key={item}
-            style={[
-              {
-                backgroundColor: "#e9e9f1",
-                borderRadius: 20,
-                paddingHorizontal: 16,
-                paddingVertical: 4,
-                marginRight: 8,
-                marginBottom: 8,
-              },
-            ]}
-          >
-            <Text
-              style={[
-                tailwind.textSm,
-                tailwind.fontMedium,
-                { color: "#101019" },
-              ]}
-            >
-              {item}
-            </Text>
-          </View>
-        ))}
-      </View> */}
-
       {/* Tempo disponível */}
-      <View style={tailwind.mB4}>
-        <Text
-          style={[
-            tailwind.textBase,
-            tailwind.fontMedium,
-            { color: "#101019" },
-            tailwind.pB2,
-          ]}
-        >
+      <View style={t.mB4}>
+        <Text style={[t.textBase, t.fontMedium, { color: "#101019" }, t.pB2]}>
           Tempo Disponível para Cozinhar
         </Text>
         <Controller
@@ -247,10 +163,10 @@ export default function FormScreen() {
               onChangeText={onChange}
               placeholderTextColor="#57578e"
               style={[
-                tailwind.h14,
-                { backgroundColor: "#e9e9f1", borderRadius: 20 },
-                tailwind.pX4,
-                tailwind.textBase,
+                t.h16,
+                { backgroundColor: "#e9e9f1", borderRadius: 8 },
+                t.pX4,
+                t.textBase,
                 { color: "#101019" },
               ]}
             />
@@ -259,15 +175,8 @@ export default function FormScreen() {
       </View>
 
       {/* Orçamento */}
-      <View style={tailwind.mB4}>
-        <Text
-          style={[
-            tailwind.textBase,
-            tailwind.fontMedium,
-            { color: "#101019" },
-            tailwind.pB2,
-          ]}
-        >
+      <View style={t.mB4}>
+        <Text style={[t.textBase, t.fontMedium, { color: "#101019" }, t.pB2]}>
           Orçamento
         </Text>
         <Controller
@@ -280,10 +189,10 @@ export default function FormScreen() {
               onChangeText={onChange}
               placeholderTextColor="#57578e"
               style={[
-                tailwind.h14,
-                { backgroundColor: "#e9e9f1", borderRadius: 20 },
-                tailwind.pX4,
-                tailwind.textBase,
+                t.h16,
+                { backgroundColor: "#e9e9f1", borderRadius: 8 },
+                t.pX4,
+                t.textBase,
                 { color: "#101019" },
               ]}
             />
@@ -292,15 +201,8 @@ export default function FormScreen() {
       </View>
 
       {/* Duração */}
-      <View style={tailwind.mB6}>
-        <Text
-          style={[
-            tailwind.textBase,
-            tailwind.fontMedium,
-            { color: "#101019" },
-            tailwind.pB2,
-          ]}
-        >
+      <View style={t.mB6}>
+        <Text style={[t.textBase, t.fontMedium, { color: "#101019" }, t.pB2]}>
           Duração (dias)
         </Text>
         <Controller
@@ -314,10 +216,10 @@ export default function FormScreen() {
               placeholderTextColor="#57578e"
               keyboardType="numeric"
               style={[
-                tailwind.h14,
-                { backgroundColor: "#e9e9f1", borderRadius: 20 },
-                tailwind.pX4,
-                tailwind.textBase,
+                t.h16,
+                { backgroundColor: "#e9e9f1", borderRadius: 8 },
+                t.pX4,
+                t.textBase,
                 { color: "#101019" },
               ]}
             />
@@ -329,21 +231,19 @@ export default function FormScreen() {
       <TouchableOpacity
         style={[
           { backgroundColor: "#adadea" },
-          tailwind.h12,
-          tailwind.roundedLg,
-          tailwind.itemsCenter,
-          tailwind.justifyCenter,
+          t.h12,
+          t.roundedLg,
+          t.itemsCenter,
+          t.justifyCenter,
         ]}
         onPress={handleSubmit(onSubmit)}
       >
-        <Text
-          style={[{ color: "#101019" }, tailwind.fontBold, tailwind.textBase]}
-        >
+        <Text style={[{ color: "#101019" }, t.fontBold, t.textBase]}>
           Gerar Cardápio
         </Text>
       </TouchableOpacity>
 
-      <View style={tailwind.h5} />
+      <View style={t.h5} />
     </ScrollView>
   );
 }

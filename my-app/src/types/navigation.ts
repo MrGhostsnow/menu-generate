@@ -1,4 +1,4 @@
 export type RootStackParamList = {
   FormScreen: undefined;
-  ResultScreen: { preferences: any }; 
+  ResultScreen: {action?: string, preferences: any }; 
 };

@@ -1,32 +1,31 @@
 import React from "react";
-import { View, Text, ImageBackground, ScrollView } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { t } from "react-native-tailwindcss";
 
-export default function CardMenu() {
-  return (
-    <ScrollView style={[t.flex1, t.bgGray100, t.p4]}>
-      <Text style={[t.textGray800, t.text2xl, t.fontBold, t.mB4]}>Monday</Text>
+interface CardMenuProps {
+  dia: string;
+  refeicoes: string[];
+  onPressRefeicao: (refeicao: string) => void;
+}
 
-      <View
-        style={[
-          t.flexRow,
-          t.justifyBetween,
-          t.roundedLg,
-          t.bgWhite,
-          t.p4,
-          t.mB4,
-        ]}
-      >
-        <View style={[t.flex, t.mR4]}>
-          <Text style={[t.textGray500, t.textSm, t.mB1]}>Breakfast</Text>
-          <Text style={[t.textGray900, t.textBase, t.fontBold, t.mB1]}>
-            Oatmeal with Fruits
-          </Text>
-          <Text style={[t.textGray500, t.textSm]}>
-            Oats, fresh fruits, honey
-          </Text>
-        </View>
-      </View>
-    </ScrollView>
+export default function CardMenu({
+  dia,
+  refeicoes,
+  onPressRefeicao,
+}: CardMenuProps) {
+  return (
+    <View style={[t.mB5, t.bgWhite, t.p4, t.roundedLg, t.shadowMd]}>
+      <Text style={[t.textLg, t.fontBold, t.mB2]}>{dia}</Text>
+
+      {refeicoes.map((refeicao, idx) => (
+        <TouchableOpacity
+          key={idx}
+          onPress={() => onPressRefeicao(refeicao)}
+          style={[t.mB2]}
+        >
+          <Text style={[t.textBase, t.textBlue500]}>{refeicao}</Text>
+        </TouchableOpacity>
+      ))}
+    </View>
   );
 }
