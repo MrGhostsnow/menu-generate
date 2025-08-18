@@ -80,6 +80,7 @@ const mockCardapio = [
 export default function ResultScreen({ route }: { route: any }) {
   const navigation = useNavigation<ResultScreenNavigationProp>();
   const preferences = route?.params?.preferences;
+  const action = route?.params?.action;
   const [cardapio, setCardapio] = useState<DiaCardapio[]>([]);
 
   useEffect(() => {
@@ -92,10 +93,12 @@ export default function ResultScreen({ route }: { route: any }) {
     //       return;
     //     }
 
-    //     const response = await gerarCardapio(preferences);
+    //     const response = await gerarCardapio(preferences, action);
     //     const textoCru = response?.[0]?.cardapio_text || "";
 
     //     const diasParseados = parseMenu(textoCru);
+    //     console.log("textoCru", textoCru);
+    //     console.log("diasParseados", diasParseados);
     //     setCardapio(diasParseados);
     //   } catch (error) {
     //     console.error("Erro ao buscar cardápio:", error);
@@ -108,7 +111,10 @@ export default function ResultScreen({ route }: { route: any }) {
   }, []);
 
   function handlePressRefeicao(refeicao: string) {
-    navigation.navigate("Recipe", { refeicao });
+    navigation.navigate("Recipe", {
+      action: "generateRecipe",
+      refeicao: refeicao,
+    });
   }
 
   return (

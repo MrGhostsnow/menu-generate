@@ -5,7 +5,7 @@ import { t } from "react-native-tailwindcss";
 interface CardMenuProps {
   dia: string;
   refeicoes: string[];
-  onPressRefeicao: (refeicao: string) => void;
+  onPressRefeicao: (refeicao: string, action?: string) => void;
 }
 
 export default function CardMenu({
