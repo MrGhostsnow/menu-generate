@@ -1,16 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
   TextInput,
   TouchableOpacity,
   ScrollView,
+  Platform,
 } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../types/navigation";
 import { useNavigation } from "@react-navigation/native";
 import { t } from "react-native-tailwindcss";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 type FormScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -19,10 +21,14 @@ type FormScreenNavigationProp = NativeStackNavigationProp<
 
 export default function FormScreen() {
   const navigation = useNavigation<FormScreenNavigationProp>();
-  const { control, handleSubmit } = useForm();
+  const { control, handleSubmit, setValue, watch } = useForm();
+  const dataInicio = watch("dataInicio");
+  const dataFim = watch("dataFim");
+  const [showInicio, setShowInicio] = useState(false);
+  const [showFim, setShowFim] = useState(false);
 
   const onSubmit = (data: any) => {
-    navigation.navigate("ResultScreen", {
+    navigation.navigate("Menu", {
       action: "generateMenu",
       preferences: data,
     });
@@ -58,7 +64,6 @@ export default function FormScreen() {
           )}
         />
       </View>
-
       {/* Gostos */}
       <View style={t.mB4}>
         <Text style={[t.textBase, t.fontMedium, { color: "#101019" }, t.pB2]}>
@@ -84,44 +89,6 @@ export default function FormScreen() {
           )}
         />
       </View>
-
-      {/* Chips simulados */}
-      {/* <View
-        style={[t.flexRow, t.flexWrap, t.mB4, { gap: 8 }]}
-      >
-        {[
-          "Italiana",
-          "Mexicana",
-          "Vegetariana",
-          "Japonesa",
-          "Mediterrânea",
-        ].map((item) => (
-          <View
-            key={item}
-            style={[
-              {
-                backgroundColor: "#e9e9f1",
-                borderRadius: 8,
-                paddingHorizontal: 16,
-                paddingVertical: 4,
-                marginRight: 8,
-                marginBottom: 8,
-              },
-            ]}
-          >
-            <Text
-              style={[
-                t.textSm,
-                t.fontMedium,
-                { color: "#101019" },
-              ]}
-            >
-              {item}
-            </Text>
-          </View>
-        ))}
-      </View> */}
-
       {/* Restrições */}
       <View style={t.mB4}>
         <Text style={[t.textBase, t.fontMedium, { color: "#101019" }, t.pB2]}>
@@ -147,7 +114,6 @@ export default function FormScreen() {
           )}
         />
       </View>
-
       {/* Tempo disponível */}
       <View style={t.mB4}>
         <Text style={[t.textBase, t.fontMedium, { color: "#101019" }, t.pB2]}>
@@ -173,7 +139,6 @@ export default function FormScreen() {
           )}
         />
       </View>
-
       {/* Orçamento */}
       <View style={t.mB4}>
         <Text style={[t.textBase, t.fontMedium, { color: "#101019" }, t.pB2]}>
@@ -199,34 +164,62 @@ export default function FormScreen() {
           )}
         />
       </View>
-
-      {/* Duração */}
-      <View style={t.mB6}>
+      {/* Data de Início */}
+      <View style={t.mB4}>
         <Text style={[t.textBase, t.fontMedium, { color: "#101019" }, t.pB2]}>
-          Duração (dias)
+          Data de Início
         </Text>
-        <Controller
-          control={control}
-          name="duracao"
-          render={({ field: { onChange, value } }) => (
-            <TextInput
-              placeholder="Número de dias"
-              value={value}
-              onChangeText={onChange}
-              placeholderTextColor="#57578e"
-              keyboardType="numeric"
-              style={[
-                t.h16,
-                { backgroundColor: "#e9e9f1", borderRadius: 8 },
-                t.pX4,
-                t.textBase,
-                { color: "#101019" },
-              ]}
-            />
-          )}
-        />
+        <TouchableOpacity
+          onPress={() => setShowInicio((prevState) => !prevState)}
+          style={[
+            t.h16,
+            { backgroundColor: "#e9e9f1", borderRadius: 8 },
+            t.pX4,
+            t.justifyCenter,
+          ]}
+        >
+          <Text>{dataInicio?.toDateString()}</Text>
+        </TouchableOpacity>
+        {showInicio && (
+          <DateTimePicker
+            value={dataInicio || new Date()}
+            mode="date"
+            display={Platform.OS === "ios" ? "inline" : "default"}
+            onChange={(_, date) => {
+              setShowInicio(false);
+              if (date) setValue("dataInicio", date);
+            }}
+          />
+        )}
       </View>
-
+      {/* Data de Fim */}
+      <View style={t.mB4}>
+        <Text style={[t.textBase, t.fontMedium, { color: "#101019" }, t.pB2]}>
+          Data de Fim
+        </Text>
+        <TouchableOpacity
+          onPress={() => setShowFim((prevState) => !prevState)}
+          style={[
+            t.h16,
+            { backgroundColor: "#e9e9f1", borderRadius: 8 },
+            t.pX4,
+            t.justifyCenter,
+          ]}
+        >
+          <Text>{dataFim?.toDateString()}</Text>
+        </TouchableOpacity>
+        {showFim && (
+          <DateTimePicker
+            value={dataFim || new Date()}
+            mode="date"
+            display={Platform.OS === "ios" ? "inline" : "default"}
+            onChange={(_, date) => {
+              setShowFim(false);
+              if (date) setValue("dataFim", date);
+            }}
+          />
+        )}
+      </View>
       {/* Botão */}
       <TouchableOpacity
         style={[
@@ -242,7 +235,6 @@ export default function FormScreen() {
           Gerar Cardápio
         </Text>
       </TouchableOpacity>
-
       <View style={t.h5} />
     </ScrollView>
   );
